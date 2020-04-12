@@ -18,6 +18,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	// Handles the Application Exception thrown from the controller
 	@ExceptionHandler(ApplicationException.class)
 	public ResponseEntity<ResponseObject> applicationExceptionHandler(ApplicationException e) {
+		// Printing the stack trace for debugging purpose
+		e.printStackTrace();
+		
 		// Create an error object using the error code, error message and error body from the exception
 		ErrorObject errorObject = new ErrorObject(e.getErrorCode(), e.getErrorMessage(), e.getErrorBody());
 		
@@ -31,6 +34,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	// Handles the Exception thrown from the controller
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ResponseObject> genericExceptionHandler(Exception e) {
+		// Printing the stack trace for debugging purpose
+		e.printStackTrace();
+
 		// Create an error object using the generic error code and error message.
 		ErrorObject errorObject = new ErrorObject(ErrorConstants.ERR_GENERIC_EXCEPTION,
 				ErrorConstants.ERR_GENERIC_EXCEPTION_MESSAGE);

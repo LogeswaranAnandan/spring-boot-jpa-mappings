@@ -2,10 +2,14 @@ package io.ztech.mappingsdemo.entity;
 
 import java.math.BigInteger;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +35,11 @@ public class Employee {
 
 	@Column(name = "salary")
 	private int salary;
+
+//	@JsonManagedReference
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
+	private Address address;
 
 	public int getId() {
 		return id;
@@ -78,6 +87,14 @@ public class Employee {
 
 	public void setSalary(int salary) {
 		this.salary = salary;
-	}  
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 }
