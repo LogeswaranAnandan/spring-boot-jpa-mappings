@@ -1,0 +1,10 @@
+spring:
+# DB Configurations
+  datasource:
+    url: jdbc:mysql://localhost:3306/jpamappings?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+    
+# Spring JPA Properties
+  jpa:
+    show-sql: true
