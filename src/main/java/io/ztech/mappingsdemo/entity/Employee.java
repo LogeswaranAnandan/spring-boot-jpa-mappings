@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "Employee")
 public class Employee {
@@ -36,7 +38,7 @@ public class Employee {
 	@Column(name = "salary")
 	private int salary;
 
-//	@JsonManagedReference
+	@JsonManagedReference
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;

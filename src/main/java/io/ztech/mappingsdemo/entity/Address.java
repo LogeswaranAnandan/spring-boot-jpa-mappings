@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -37,8 +37,7 @@ public class Address {
 	@Column(name = "zipcode")
 	private String zipcode;
 
-//	@JsonBackReference
-	@JsonIgnore
+	@JsonBackReference
 	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Employee employee;
 
