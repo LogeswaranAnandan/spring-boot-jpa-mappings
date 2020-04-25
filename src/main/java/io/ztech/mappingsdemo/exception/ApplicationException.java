@@ -1,5 +1,7 @@
 package io.ztech.mappingsdemo.exception;
 
+import io.ztech.mappingsdemo.constants.ErrorConstants;
+
 public class ApplicationException extends Exception {
 
 	/**
@@ -14,6 +16,8 @@ public class ApplicationException extends Exception {
 
 	//	Default Constructor
 	public ApplicationException() {
+		this.errorCode = ErrorConstants.ERR_GENERIC_EXCEPTION;
+		this.errorMessage = ErrorConstants.ERR_GENERIC_EXCEPTION_MESSAGE;
 	}
 
 	//	Constructor to set errorcode and errormessage
