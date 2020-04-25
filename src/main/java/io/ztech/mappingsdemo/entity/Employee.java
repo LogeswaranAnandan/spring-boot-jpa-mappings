@@ -1,6 +1,7 @@
 package io.ztech.mappingsdemo.entity;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +10,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Employee")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee {
 
 	@Id
@@ -48,6 +56,23 @@ public class Employee {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id")
 	private Department department;
+	
+	@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+	name = "employee_speciality",
+	joinColumns = { @JoinColumn(name = "employee_id") },
+	inverseJoinColumns = { @JoinColumn(name = "speciality_id") }
+	)
+	private List<Speciality> specialities;
+
+	public List<Speciality> getSpecialities() {
+		return specialities;
+	}
+
+	public void setSpecialities(List<Speciality> specialities) {
+		this.specialities = specialities;
+	}
 
 	public int getId() {
 		return id;
