@@ -1,18 +1,13 @@
 package io.ztech.mappingsdemo.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Table;
 
 @Entity
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@Table(name = "speciality")
 public class Speciality {
 
     @Id
@@ -21,18 +16,6 @@ public class Speciality {
 
     @Column(name = "name")
     private String name;
-    
-    @JsonBackReference
-    @ManyToMany(mappedBy = "specialities")
-    private List<Employee> employees;
-
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
 
 	public int getId() {
         return id;

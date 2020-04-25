@@ -1,20 +1,13 @@
 package io.ztech.mappingsdemo.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "address")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Address {
 
 	@Id
@@ -36,10 +29,6 @@ public class Address {
 
 	@Column(name = "zipcode")
 	private String zipcode;
-
-	@JsonBackReference
-	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Employee employee;
 
 	public int getId() {
 		return id;
@@ -88,13 +77,4 @@ public class Address {
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 }

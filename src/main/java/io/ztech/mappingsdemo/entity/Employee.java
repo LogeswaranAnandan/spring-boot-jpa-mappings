@@ -16,12 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "Employee")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Employee {
 
 	@Id
@@ -44,17 +40,14 @@ public class Employee {
 	@Column(name = "salary")
 	private int salary;
 
-	@JsonManagedReference
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;
 
-	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id")
 	private Department department;
 
-	@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "employee_speciality", joinColumns = { @JoinColumn(name = "employee_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "speciality_id") })
