@@ -12,4 +12,7 @@ public class ErrorConstants {
 	
 	public static String ERR_ADDRESS_NOT_FOUND = "ERR_ADDRESS_NOT_FOUND";
 	public static String ERR_ADDRESS_NOT_FOUND_MESSAGE = "The requested address is not found";
+	
+	public static String ERR_SPECIALITY_NOT_FOUND = "ERR_SPECIALITY_NOT_FOUND";
+	public static String ERR_SPECIALITY_NOT_FOUND_MESSAGE = "The requested speciality is not found";
 }

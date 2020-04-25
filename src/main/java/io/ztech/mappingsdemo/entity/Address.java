@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "address")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Address {
 
 	@Id
@@ -39,7 +38,7 @@ public class Address {
 	private String zipcode;
 
 	@JsonBackReference
-	@OneToOne(mappedBy = "address", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Employee employee;
 
 	public int getId() {

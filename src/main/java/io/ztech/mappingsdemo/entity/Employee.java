@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "Employee")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee {
 
 	@Id
@@ -46,22 +45,19 @@ public class Employee {
 	private int salary;
 
 	@JsonManagedReference
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;
 
 	@JsonManagedReference
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id")
 	private Department department;
-	
+
 	@JsonManagedReference
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-	name = "employee_speciality",
-	joinColumns = { @JoinColumn(name = "employee_id") },
-	inverseJoinColumns = { @JoinColumn(name = "speciality_id") }
-	)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "employee_speciality", joinColumns = { @JoinColumn(name = "employee_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "speciality_id") })
 	private List<Speciality> specialities;
 
 	public List<Speciality> getSpecialities() {

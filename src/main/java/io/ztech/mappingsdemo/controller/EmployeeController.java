@@ -29,7 +29,10 @@ public class EmployeeController {
 	
 	@GetMapping("/{id}")
 	public Employee getEmployee(@PathVariable("id") int id) throws Exception {
-		return employeeDelegate.getEmployeeById(id);
+		Employee employee = employeeDelegate.getEmployeeById(id);
+		employee.setDepartment(null);
+		employee.setSpecialities(null);
+		return employee;
 	}
 	
 	@PostMapping
