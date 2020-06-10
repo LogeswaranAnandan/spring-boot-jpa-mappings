@@ -7,7 +7,4 @@ import io.ztech.mappingsdemo.entity.Address;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
-
-    public Address findByEmployeeId(int id);
-
 }

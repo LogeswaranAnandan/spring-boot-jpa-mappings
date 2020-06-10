@@ -28,9 +28,4 @@ public class AddressController {
         return addressDelegate.getAddressById(id);
     }
 
-    @GetMapping("/employees/{employeeId}")
-    public Address getAddressByEmployeeId(@PathVariable("employeeId") int employeeId) throws Exception {
-        return addressDelegate.getAddressByEmployeeId(employeeId);
-    }
-
 }

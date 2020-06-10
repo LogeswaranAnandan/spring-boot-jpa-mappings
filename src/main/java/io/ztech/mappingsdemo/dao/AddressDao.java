@@ -30,9 +30,4 @@ public class AddressDao {
 		}
 	}
 
-	public Address getAddressByEmployeeId(int employeeId) throws Exception {
-		Address address = addressRepository.findByEmployeeId(employeeId);
-		return address;
-	}
-
 }

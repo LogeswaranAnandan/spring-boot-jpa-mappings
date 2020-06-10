@@ -28,12 +28,4 @@ public class AddressDelegate {
         return addressDao.getAddressById(id);
     }
 
-    public Address getAddressByEmployeeId(int employeeId) throws Exception {
-        if (employeeDao.doesEmployeeExists(employeeId)) {
-            return addressDao.getAddressByEmployeeId(employeeId);
-        } else {
-            throw new ApplicationException(ErrorConstants.ERR_EMPLOYEE_NOT_FOUND, ErrorConstants.ERR_EMPLOYEE_NOT_FOUND_MESSAGE);
-        }
-    }
-
 }
