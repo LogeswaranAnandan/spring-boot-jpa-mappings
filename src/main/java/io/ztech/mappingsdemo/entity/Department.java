@@ -1,7 +1,14 @@
 package io.ztech.mappingsdemo.entity;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "department")
 public class Department {
@@ -13,25 +20,6 @@ public class Department {
     @Column(name = "name")
     private String name;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Department [id=" + id + ", name=" + name + "]";
-    }
-
+//    @OneToMany(mappedBy = "department")
+//    private List<Employee> employees;
 }

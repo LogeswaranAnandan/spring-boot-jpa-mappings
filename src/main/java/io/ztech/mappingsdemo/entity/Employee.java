@@ -1,117 +1,69 @@
 package io.ztech.mappingsdemo.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "Employee")
+@NamedEntityGraphs({
+        @NamedEntityGraph(name="ADDRESS_ONLY", attributeNodes = {
+                @NamedAttributeNode(value = "address")
+        }),
+        @NamedEntityGraph(name="EXCLUDE_SPECIALITIES", attributeNodes = {
+                @NamedAttributeNode("address"),
+                @NamedAttributeNode("department")
+        })
+})
 public class Employee {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-	@Column(name = "firstname")
-	private String firstName;
+  @Column(name = "firstname")
+  private String firstName;
 
-	@Column(name = "lastname")
-	private String lastName;
+  @Column(name = "lastname")
+  private String lastName;
 
-	@Column(name = "email")
-	private String email;
+  private String email;
 
-	@Column(name = "phone_number")
-	private BigInteger phoneNumber;
+  private BigInteger phoneNumber;
 
-	@Column(name = "salary")
-	private int salary;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "address_id")
+  private Address address;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
-	private Address address;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "department_id")
+  private Department department;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "department_id")
-	private Department department;
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name = "employee_speciality", joinColumns = { @JoinColumn(name = "employee_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "speciality_id") })
-	private List<Speciality> specialities;
-
-	public List<Speciality> getSpecialities() {
-		return specialities;
-	}
-
-	public void setSpecialities(List<Speciality> specialities) {
-		this.specialities = specialities;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public BigInteger getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(BigInteger phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public int getSalary() {
-		return salary;
-	}
-
-	public void setSalary(int salary) {
-		this.salary = salary;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+          name = "employee_speciality",
+          joinColumns = {@JoinColumn(name = "employee_id")},
+          inverseJoinColumns = {@JoinColumn(name = "speciality_id")}
+  )
+  private List<Speciality> specialities;
 }

@@ -2,6 +2,12 @@ package io.ztech.mappingsdemo.controller;
 
 import java.util.List;
 
+import io.ztech.mappingsdemo.annotation.IgnoreResponseWrapper;
+import io.ztech.mappingsdemo.dto.EmployeeDto;
+import io.ztech.mappingsdemo.entity.Address;
+import io.ztech.mappingsdemo.entity.Speciality;
+import io.ztech.mappingsdemo.repository.AddressRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,22 +27,44 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeDelegate employeeDelegate;
-	
+
+	@Autowired
+	private AddressRepository addressRepository;
+
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@IgnoreResponseWrapper
 	@GetMapping
 	public List<Employee> getAllEmployees() throws Exception {
 		return employeeDelegate.getAllEmployees();
 	}
-	
+
+	@IgnoreResponseWrapper
 	@GetMapping("/{id}")
-	public Employee getEmployee(@PathVariable("id") int id) throws Exception {
+	public EmployeeDto getEmployee(@PathVariable("id") int id) throws Exception {
 		Employee employee = employeeDelegate.getEmployeeById(id);
-		employee.setDepartment(null);
-		employee.setSpecialities(null);
-		return employee;
+		EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+//		EmployeeDto employeeDto = new EmployeeDto();
+//		employeeDto.setAddress(employee.getAddress());
+//		employeeDto.setSpecialities(employee.getSpecialities());
+		return employeeDto;
 	}
-	
+
+	@IgnoreResponseWrapper
 	@PostMapping
 	public Employee addEmployee(@RequestBody Employee employee) throws Exception {
+		Address address = employee.getAddress();
+		Address savedAddress = addressRepository.save(address);
+
+		// Type 1
+//		employee.setAddress(savedAddress);
+
+		// Type 2
+		Address addressMappedEntity = new Address();
+		addressMappedEntity.setId(savedAddress.getId());
+		employee.setAddress(addressMappedEntity);
+
 		return employeeDelegate.addEmployee(employee);
 	}
 	
